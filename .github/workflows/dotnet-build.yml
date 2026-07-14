@@ -35,5 +35,14 @@ jobs:
       - name: Build application
         run: dotnet build dotnet-demo.csproj --configuration Release --no-restore
 
+      - name: Run unit tests
+        run: dotnet test tests/dotnet-demo.Tests/dotnet-demo.Tests.csproj --configuration Release --no-build --verbosity minimal --logger "trx;LogFileName=test-results.trx" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: tests/dotnet-demo.Tests/TestResults/**/*.trx
+
       - name: Run application
         run: dotnet run --project dotnet-demo.csproj --configuration Release --no-build
