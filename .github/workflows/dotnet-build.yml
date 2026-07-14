@@ -29,8 +29,11 @@ jobs:
           which dotnet
           dotnet --info
 
-      - name: Restore dependencies
+      - name: Restore application dependencies
         run: dotnet restore dotnet-demo.csproj
+
+      - name: Restore test dependencies
+        run: dotnet restore tests/dotnet-demo.Tests/dotnet-demo.Tests.csproj
 
       - name: Build application
         run: dotnet build dotnet-demo.csproj --configuration Release --no-restore
